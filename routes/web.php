@@ -40,7 +40,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->get('{id}/maintenance', 'MaintenanceController@searchByEquipment');
     });
 
-    $router->group(['prefix' => 'maintenance'], function () use ($router) {
+    $router->group(['prefix' => 'maintenances'], function () use ($router) {
         $router->get('', 'MaintenanceController@index');
         $router->post('', 'MaintenanceController@store');
         $router->get('{id}', 'MaintenanceController@show');

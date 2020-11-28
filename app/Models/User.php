@@ -16,6 +16,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected array $fillable = ['name', 'username'];
     protected array $hidden = ['password'];
     protected $casts = ['status' => 'boolean'];
+    protected $appends = ['links'];
     protected $perPage = 10;
 
     public function setPasswordAttribute(string $password): void
@@ -26,5 +27,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function maintenance()
     {
         return $this->belongsTo(Maintenance::class);
+    }
+
+    public function getLinksAttribute(): array
+    {
+        return [
+            'self' => '/api/equipments/' . $this->id,
+            'maintenances' => '/api/users/' . $this->id . '/maintenance'
+        ];
     }
 }

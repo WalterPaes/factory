@@ -35,9 +35,9 @@ class Maintenance extends Model
     public function getLinksAttribute(): array
     {
         return [
-            'self' => '/api/maintenance/' . $this->id,
-            'equipment' => '/api/equipment/' . $this->equipment_id,
-            'user' => '/api/user/' . $this->user_id
+            'self' => '/api/maintenances/' . $this->id,
+            'equipment' => '/api/equipments/' . $this->equipment_id,
+            'user' => '/api/users/' . $this->user_id
         ];
     }
 }
