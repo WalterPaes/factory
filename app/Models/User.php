@@ -13,13 +13,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
-    protected array $fillable = [
-        'name', 'email',
-    ];
-
-    protected array $hidden = [
-        'password',
-    ];
+    protected array $fillable = ['name', 'username'];
+    protected array $hidden = ['password'];
+    protected $casts = ['status' => 'boolean'];
+    protected $perPage = 10;
 
     public function setPasswordAttribute(string $password): void
     {
