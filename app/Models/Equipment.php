@@ -8,4 +8,9 @@ class Equipment extends Model
 {
     protected array $fillable = ['name', 'description'];
     protected $perPage = 10;
+
+    public function maintenance()
+    {
+        return $this->belongsTo(Maintenance::class);
+    }
 }

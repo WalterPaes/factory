@@ -25,4 +25,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         $this->attributes['password'] = Hash::make($password);
     }
+
+    public function maintenance()
+    {
+        return $this->belongsTo(Maintenance::class);
+    }
 }
