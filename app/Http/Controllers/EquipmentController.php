@@ -30,8 +30,7 @@ class EquipmentController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => 'required',
-            'password' => ['required', 'min:6']
+            'status' => ['required', 'boolean']
         ]);
 
         $resource = $this->model::find($id);
