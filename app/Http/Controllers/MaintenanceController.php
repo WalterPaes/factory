@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Maintenance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MaintenanceController extends BaseController
 {
@@ -18,11 +19,13 @@ class MaintenanceController extends BaseController
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
             'equipment_id' => 'exists:equipment,id',
-            'user_id' => 'exists:user,id',
             'description' => 'required'
         ]);
 
-        $data = $this->model::create($request->all());
+        $requestData = $request->all();
+        $requestData['user_id'] = Auth::user()->id;
+
+        $data = $this->model::create($requestData);
         if (is_null($data)) {
             return response()->json([], 500);
         }
@@ -36,7 +39,6 @@ class MaintenanceController extends BaseController
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
             'equipment_id' => 'exists:equipment,id',
-            'user_id' => 'exists:user,id',
             'description' => 'required'
         ]);
 
@@ -45,7 +47,10 @@ class MaintenanceController extends BaseController
             return response()->json('Resource not found', 404);
         }
 
-        $resource->fill($request->all());
+        $requestData = $request->all();
+        $requestData['user_id'] = Auth::user()->id;
+
+        $resource->fill($requestData);
         $resource->save();
 
         return response()->json([], 200);
