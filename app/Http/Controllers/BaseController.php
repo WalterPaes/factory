@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
 {
@@ -19,7 +19,7 @@ abstract class BaseController extends Controller
         $data = $this->model::find($id);
         if (is_null($data)) {
             return response()
-                ->json('', 404);
+                ->json([], 404);
         }
         return $data;
     }
@@ -30,7 +30,7 @@ abstract class BaseController extends Controller
         if ($total < 1) {
             return response()->json('Resource not found', 404);
         }
-        return response()->json('', 204);
+        return response()->json([], 204);
     }
 
     abstract function store(Request $request);
