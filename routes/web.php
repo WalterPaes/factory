@@ -26,6 +26,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->get('{id}', 'UserController@show');
         $router->put('{id}', 'UserController@update');
         $router->delete('{id}', 'UserController@destroy');
+
+        $router->get('{id}/maintenance', 'MaintenanceController@searchByuser');
     });
 
     $router->group(['prefix' => 'equipments'], function () use ($router) {
@@ -34,6 +36,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->get('{id}', 'EquipmentController@show');
         $router->put('{id}', 'EquipmentController@update');
         $router->delete('{id}', 'EquipmentController@destroy');
+
+        $router->get('{id}/maintenance', 'MaintenanceController@searchByEquipment');
     });
 
     $router->group(['prefix' => 'maintenance'], function () use ($router) {
