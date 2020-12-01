@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Equipment extends Model
 {
+    protected $table = 'equipments';
     protected array $fillable = ['name', 'description', 'status'];
     protected $casts = ['status' => 'boolean'];
     protected $appends = ['links'];

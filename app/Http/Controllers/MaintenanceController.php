@@ -20,7 +20,7 @@ class MaintenanceController extends BaseController
         $this->validate($request, [
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
-            'equipment_id' => 'exists:equipment,id',
+            'equipment_id' => ['required', 'exists:equipment,id'],
             'description' => 'required'
         ]);
 
@@ -40,7 +40,7 @@ class MaintenanceController extends BaseController
         $this->validate($request, [
             'start' => ['required', 'date'],
             'end' => ['required', 'date'],
-            'equipment_id' => 'exists:equipment,id',
+            'equipment_id' => ['required', 'exists:equipment,id'],
             'description' => 'required'
         ]);
 

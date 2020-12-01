@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends BaseController
 {
@@ -16,7 +17,7 @@ class UserController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => 'required',
+            'username' => ['required', 'unique:users,username'],
             'password' => ['required', 'min:6']
         ]);
 
@@ -32,7 +33,7 @@ class UserController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => 'required',
+            'username' => ['required', Rule::unique('users')->ignore($id)],
             'password' => ['required', 'min:6']
         ]);
 

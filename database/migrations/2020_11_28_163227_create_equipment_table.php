@@ -18,6 +18,7 @@ class CreateEquipmentTable extends Migration
             $table->string('name')->unique();
             $table->string('description');
             $table->boolean('status')->default(true);
+            $table->timestamps();
         });
     }
 
