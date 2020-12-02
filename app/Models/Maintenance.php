@@ -7,7 +7,7 @@ use DateTime;
 
 class Maintenance extends Model
 {
-    protected array $fillable = ['start', 'end', 'description', 'equipment_id', 'user_id'];
+    protected $fillable = ['start', 'end', 'description', 'equipment_id', 'user_id'];
     protected $perPage = 10;
     protected $appends = ['links'];
 

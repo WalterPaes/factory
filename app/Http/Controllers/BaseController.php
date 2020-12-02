@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
 {
-    protected string $model;
+    protected $model;
 
     public function index(Request $request)
     {

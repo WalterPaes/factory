@@ -8,7 +8,7 @@ use DateTime;
 class Equipment extends Model
 {
     protected $table = 'equipments';
-    protected array $fillable = ['name', 'description', 'status'];
+    protected $fillable = ['name', 'description', 'status'];
     protected $casts = ['status' => 'boolean'];
     protected $appends = ['links'];
     protected $perPage = 10;
