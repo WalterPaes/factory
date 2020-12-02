@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Support\Facades\Hash;
+use DateTime;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -27,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function maintenance()
     {
-        return $this->belongsTo(Maintenance::class);
+        return $this->hasMany(Maintenance::class);
     }
 
     public function getLinksAttribute(): array
@@ -36,5 +37,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'self' => '/api/equipments/' . $this->id,
             'maintenances' => '/api/users/' . $this->id . '/maintenance'
         ];
+    }
+
+    public function getCreatedAtAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedAtAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        return $date->format('Y-m-d H:i:s');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
 
 class Maintenance extends Model
 {
@@ -12,12 +13,12 @@ class Maintenance extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function equipment()
     {
-        return $this->hasOne(Equipment::class);
+        return $this->belongsTo(Equipment::class);
     }
 
     public function getUserAttribute()
@@ -39,5 +40,17 @@ class Maintenance extends Model
             'equipment' => '/api/equipments/' . $this->equipment_id,
             'user' => '/api/users/' . $this->user_id
         ];
+    }
+
+    public function getCreatedAtAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedAtAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        return $date->format('Y-m-d H:i:s');
     }
 }

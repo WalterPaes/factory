@@ -31,6 +31,11 @@ class AuthController extends Controller
             env('JWT_KEY')
         );
 
-        return ['access_token' => $token];
+        return [
+            'user' => [
+                'username' => $request->username
+            ],
+            'access_token' => $token
+        ];
     }
 }

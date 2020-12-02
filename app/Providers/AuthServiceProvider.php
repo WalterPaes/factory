@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Firebase\JWT\JWT;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

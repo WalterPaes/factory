@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipment;
 use App\Models\Maintenance;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +12,24 @@ class MaintenanceController extends BaseController
     public function __construct()
     {
         $this->model = Maintenance::class;
+    }
+
+    public function index(Request $request)
+    {
+        return Maintenance::with(['user', 'equipment'])
+            ->paginate($request->per_page);
+    }
+
+    public function show(int $id)
+    {
+        $data = Maintenance::where('id', $id)
+            ->with(['user', 'equipment'])
+            ->first();
+        if (is_null($data)) {
+            return response()
+                ->json([], 404);
+        }
+        return $data;
     }
 
     public function store(Request $request)
@@ -58,18 +75,18 @@ class MaintenanceController extends BaseController
         return response()->json([], 200);
     }
 
-    public function searchByUser(int $userId)
+    public function searchByUser(int $id)
     {
         $users = User::query()
-            ->where('user_id', $userId)
+            ->where('user_id', $id)
             ->paginate();
         return $users;
     }
 
-    public function searchByEquipment(int $equipmentId)
+    public function searchByEquipment(int $id)
     {
-        $equipments = Equipment::query()
-            ->where('equipment_id', $equipmentId)
+        $equipments = Maintenance::query()
+            ->where('equipment_id', $id)
             ->paginate();
         return $equipments;
     }

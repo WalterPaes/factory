@@ -19,8 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->post('/api/login', 'AuthController@login');
 
-//$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get('', 'UserController@index');
         $router->post('', 'UserController@store');
@@ -28,7 +27,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('{id}', 'UserController@update');
         $router->delete('{id}', 'UserController@destroy');
 
-        $router->get('{id}/maintenance', 'MaintenanceController@searchByuser');
+        $router->get('{id}/maintenances', 'MaintenanceController@searchByuser');
     });
 
     $router->group(['prefix' => 'equipments'], function () use ($router) {
@@ -38,7 +37,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('{id}', 'EquipmentController@update');
         $router->delete('{id}', 'EquipmentController@destroy');
 
-        $router->get('{id}/maintenance', 'MaintenanceController@searchByEquipment');
+        $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
     });
 
     $router->group(['prefix' => 'maintenances'], function () use ($router) {
