@@ -17,7 +17,7 @@ class CreateMaintenancesTable extends Migration
             $table->id();
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->string('description');
+            $table->string('description', 500);
             $table->unsignedBigInteger('equipment_id');
             $table->unsignedBigInteger('user_id');
 

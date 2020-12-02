@@ -15,8 +15,8 @@ class CreateEquipmentTable extends Migration
     {
         Schema::create('equipments', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('description');
+            $table->string('name', 50)->unique();
+            $table->string('description', 500);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
