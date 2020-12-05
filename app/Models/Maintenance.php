@@ -10,7 +10,7 @@ class Maintenance extends Model
     protected $fillable = ['start', 'end', 'description', 'equipment_id', 'user_id'];
     protected $perPage = 10;
     protected $appends = ['links'];
-    protected $timestamps = false;
+    public $timestamps = false;
 
     public function user()
     {
