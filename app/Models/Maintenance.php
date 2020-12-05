@@ -7,10 +7,10 @@ use DateTime;
 
 class Maintenance extends Model
 {
+    public $timestamps = false;
     protected $fillable = ['start', 'end', 'description', 'equipment_id', 'user_id'];
     protected $perPage = 10;
     protected $appends = ['links'];
-    public $timestamps = false;
 
     public function user()
     {
