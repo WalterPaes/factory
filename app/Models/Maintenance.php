@@ -10,6 +10,7 @@ class Maintenance extends Model
     protected $fillable = ['start', 'end', 'description', 'equipment_id', 'user_id'];
     protected $perPage = 10;
     protected $appends = ['links'];
+    protected $timestamps = false;
 
     public function user()
     {
@@ -42,15 +43,27 @@ class Maintenance extends Model
         ];
     }
 
-    public function getCreatedAtAttribute(string $date)
+    public function getStartAttribute(string $date)
     {
         $date = new DateTime($date);
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function getUpdatedAtAttribute(string $date)
+    public function setStartAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        $this->attributes['start'] = $date->format('Y-m-d H:i:s');
+    }
+
+    public function getEndAttribute(string $date)
     {
         $date = new DateTime($date);
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function setEndAttribute(string $date)
+    {
+        $date = new DateTime($date);
+        $this->attributes['end'] = $date->format('Y-m-d H:i:s');
     }
 }
