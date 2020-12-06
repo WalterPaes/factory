@@ -2,20 +2,52 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
 
 class Equipment extends Model
 {
     protected $table = 'equipments';
-    protected $fillable = ['name', 'description', 'status'];
+    protected $fillable = ['name', 'description', 'status', 'localization'];
     protected $casts = ['status' => 'boolean'];
     protected $appends = ['links'];
     protected $perPage = 10;
 
+    public static function create(array $data)
+    {
+        $equipment = new Equipment;
+        $equipment->name = $data['name'];
+        $equipment->description = $data['description'];
+        $equipment->localization = $data['localization'];
+        $equipment->components()->attach($data['components']);
+        return $equipment->save();
+    }
+
+    public static function edit(int $id, array $data)
+    {
+        $equipment = self::find($id);
+        $equipment->name = $data['name'];
+        $equipment->description = $data['description'];
+        $equipment->status = $data['status'];
+        $equipment->localization = $data['localization'];
+        $equipment->components()->sync($data['components']);
+        return $equipment->save();
+    }
+
+    public static function actives()
+    {
+        return self::where('status', true)
+            ->get();
+    }
+
     public function maintenance()
     {
         return $this->hasMany(Maintenance::class);
+    }
+
+    public function components()
+    {
+        return $this->belongsToMany(Component::class, 'component_equipment');
     }
 
     public function getLinksAttribute(): array

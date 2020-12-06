@@ -6,6 +6,7 @@ use App\Models\User;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 class AuthController extends Controller
 {
@@ -16,26 +17,30 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('username', $request->username)->first();
+        try {
+            $user = User::where('username', $request->username)->first();
 
-        if (is_null($user) || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Username or Password is invalid'], 401);
+            if (is_null($user) || !Hash::check($request->password, $user->password)) {
+                return response()->json(['message' => 'Username or Password is invalid'], 401);
+            }
+
+            if (!$user->status) {
+                return response()->json(['message' => 'This User is inactive'], 401);
+            }
+
+            $token = JWT::encode(
+                ['username' => $request->username],
+                env('JWT_KEY')
+            );
+
+            return [
+                'user' => [
+                    'username' => $request->username
+                ],
+                'access_token' => $token
+            ];
+        } catch (Throwable $t) {
+            return response()->json([], 500);
         }
-
-        if (!$user->status) {
-            return response()->json(['message' => 'This User is inactive'], 401);
-        }
-
-        $token = JWT::encode(
-            ['username' => $request->username],
-            env('JWT_KEY')
-        );
-
-        return [
-            'user' => [
-                'username' => $request->username
-            ],
-            'access_token' => $token
-        ];
     }
 }

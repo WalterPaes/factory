@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Component;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Throwable;
 
-class UserController extends BaseController
+class ComponentController extends BaseController
 {
     public function __construct()
     {
-        $this->model = User::class;
+        $this->model = Component::class;
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => ['required', 'unique:users,username'],
-            'password' => ['required', 'min:6']
+            'serial_number' => 'required',
+            'model' => 'required',
+            'manufacturer' => 'required',
         ]);
-
+        
         try {
             $data = $this->model::create($request->all());
             if (is_null($data)) {
@@ -38,8 +38,9 @@ class UserController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => ['required', Rule::unique('users')->ignore($id)],
-            'password' => ['required', 'min:6']
+            'serial_number' => 'required',
+            'model' => 'required',
+            'manufacturer' => 'required'
         ]);
 
         try {

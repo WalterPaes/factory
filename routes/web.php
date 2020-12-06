@@ -36,6 +36,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->get('{id}', 'EquipmentController@show');
         $router->put('{id}', 'EquipmentController@update');
         $router->delete('{id}', 'EquipmentController@destroy');
+        $router->get('actives', 'EquipmentController@actives');
 
         $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
     });
@@ -46,5 +47,13 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->get('{id}', 'MaintenanceController@show');
         $router->put('{id}', 'MaintenanceController@update');
         $router->delete('{id}', 'MaintenanceController@destroy');
+    });
+
+    $router->group(['prefix' => 'components'], function () use ($router) {
+        $router->get('', 'ComponentController@index');
+        $router->post('', 'ComponentController@store');
+        $router->get('{id}', 'ComponentController@show');
+        $router->put('{id}', 'ComponentController@update');
+        $router->delete('{id}', 'ComponentController@destroy');
     });
 });
