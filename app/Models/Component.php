@@ -10,7 +10,7 @@ class Component extends Model
     protected $fillable = ['name', 'serial_number', 'model', 'manufacturer'];
     protected $perPage = 10;
 
-    public function equipment()
+    public function equipments()
     {
         return $this->belongsToMany(Component::class, 'component_equipment');
     }
