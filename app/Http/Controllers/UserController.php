@@ -47,10 +47,8 @@ class UserController extends BaseController
             if (is_null($resource)) {
                 return response()->json('Resource not found', 404);
             }
-
             $resource->fill($request->all());
             $resource->save();
-
             return response()->json([], 200);
         } catch (Throwable $t) {
             return response()->json([], 500);
