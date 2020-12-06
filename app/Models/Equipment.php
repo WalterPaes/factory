@@ -19,7 +19,7 @@ class Equipment extends Model
         $equipment->name = $data['name'];
         $equipment->description = $data['description'];
         $equipment->localization = $data['localization'];
-        //$equipment->components()->attach($data['components']);
+        $equipment->components()->attach($data['components']);
         return $equipment->save();
     }
 

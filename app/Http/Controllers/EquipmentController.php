@@ -28,6 +28,22 @@ class EquipmentController extends BaseController
         }
     }
 
+    public function show(int $id)
+    {
+        try {
+            $data = Equipment::where('id', $id)
+                ->with('components')
+                ->get();
+            if (is_null($data)) {
+                return response()
+                    ->json([], 404);
+            }
+            return $data;
+        } catch (Throwable $t) {
+            return response()->json([], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
