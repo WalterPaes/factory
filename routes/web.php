@@ -37,6 +37,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->put('{id}', 'EquipmentController@update');
         $router->delete('{id}', 'EquipmentController@destroy');
 
+        $router->get('{id}/components', 'EquipmentController@components');
         $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
     });
 

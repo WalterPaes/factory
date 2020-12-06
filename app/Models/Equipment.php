@@ -56,7 +56,8 @@ class Equipment extends Model
     {
         return [
             'self' => '/api/equipments/' . $this->id,
-            'maintenances' => '/api/equipments/' . $this->id . '/maintenance'
+            'maintenances' => '/api/equipments/' . $this->id . '/maintenance',
+            'components' => '/api/equipments/' . $this->id . '/components'
         ];
     }
 

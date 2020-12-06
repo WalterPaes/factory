@@ -31,9 +31,7 @@ class EquipmentController extends BaseController
     public function show(int $id)
     {
         try {
-            $data = Equipment::where('id', $id)
-                ->with('components')
-                ->get();
+            $data = Equipment::find($id);
             if (is_null($data)) {
                 return response()
                     ->json([], 404);
@@ -78,6 +76,24 @@ class EquipmentController extends BaseController
             }
 
             return response()->json([], 200);
+        } catch (Throwable $t) {
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
+        }
+    }
+
+    public function components(int $id)
+    {
+        try {
+            $data = Equipment::where('id', $id)
+                ->with('components')
+                ->get();
+            if (is_null($data)) {
+                return response()
+                    ->json([], 404);
+            }
+            return $data;
         } catch (Throwable $t) {
             return response()->json([
                 "message" => $t->getMessage()
