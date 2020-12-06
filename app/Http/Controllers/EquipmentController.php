@@ -16,19 +16,11 @@ class EquipmentController extends BaseController
     public function index(Request $request)
     {
         try {
+            if ($request->actives) {
+                return Equipment::actives();
+            }
             return Equipment::with('components')
                 ->paginate($request->per_page);
-        } catch (Throwable $t) {
-            return response()->json([
-                "message" => $t->getMessage()
-            ], 500);
-        }
-    }
-
-    public function actives()
-    {
-        try {
-            return Equipment::actives();
         } catch (Throwable $t) {
             return response()->json([
                 "message" => $t->getMessage()

@@ -38,8 +38,6 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->delete('{id}', 'EquipmentController@destroy');
 
         $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
-
-        $router->get('actives', 'EquipmentController@actives');
     });
 
     $router->group(['prefix' => 'maintenances'], function () use ($router) {
