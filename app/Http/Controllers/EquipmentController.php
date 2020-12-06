@@ -65,7 +65,9 @@ class EquipmentController extends BaseController
 
             return response()->json([], 200);
         } catch (Throwable $t) {
-            return response()->json([], 500);
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
         }
     }
 }
