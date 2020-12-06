@@ -29,13 +29,17 @@ class AuthController extends Controller
             }
 
             $token = JWT::encode(
-                ['username' => $request->username],
+                [
+                    'name' => $user->name,
+                    'username' => $user->username
+                ],
                 env('JWT_KEY')
             );
 
             return [
                 'user' => [
-                    'username' => $request->username
+                    'name' => $user->name,
+                    'username' => $user->username,
                 ],
                 'access_token' => $token
             ];

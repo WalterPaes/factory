@@ -14,8 +14,8 @@ class CreateComponentEquipmentTable extends Migration
     public function up()
     {
         Schema::create('component_equipment', function (Blueprint $table) {
-            $table->bigIncrements('component_id');
-            $table->bigIncrements('equipment_id');
+            $table->unsignedBigInteger('component_id');
+            $table->unsignedBigInteger('equipment_id');
 
             $table->foreign('component_id')->references('id')->on('components');
             $table->foreign('equipment_id')->references('id')->on('equipments');
