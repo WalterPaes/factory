@@ -13,6 +13,21 @@ class ComponentController extends BaseController
         $this->model = Component::class;
     }
 
+    public function index(Request $request)
+    {
+        try {
+            if ($request->input('actives')) {
+                return Component::all();
+            }
+            return Component::with('equipments')
+                ->paginate($request->per_page);
+        } catch (Throwable $t) {
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -21,7 +36,7 @@ class ComponentController extends BaseController
             'model' => 'required',
             'manufacturer' => 'required',
         ]);
-        
+
         try {
             $data = $this->model::create($request->all());
             if (is_null($data)) {
