@@ -19,7 +19,9 @@ class EquipmentController extends BaseController
             return Equipment::with('components')
                 ->paginate($request->per_page);
         } catch (Throwable $t) {
-            return response()->json([], 500);
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
         }
     }
 
@@ -28,7 +30,9 @@ class EquipmentController extends BaseController
         try {
             return Equipment::actives();
         } catch (Throwable $t) {
-            return response()->json([], 500);
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
         }
     }
 
@@ -46,7 +50,9 @@ class EquipmentController extends BaseController
 
             return response()->json([], 201);
         } catch (Throwable $t) {
-            return response()->json([], 500);
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
         }
     }
 
