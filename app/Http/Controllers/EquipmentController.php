@@ -16,7 +16,7 @@ class EquipmentController extends BaseController
     public function index(Request $request)
     {
         try {
-            if ($request->actives) {
+            if ($request->input('actives')) {
                 return Equipment::actives();
             }
             return Equipment::with('components')
