@@ -109,7 +109,7 @@ class MaintenanceController extends BaseController
         try {
             $equipments = Maintenance::query()
                 ->where('equipment_id', $id)
-                ->paginate();
+                ->get();
             return $equipments;
         } catch (Throwable $t) {
             return response()->json([], 500);
