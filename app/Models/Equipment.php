@@ -14,14 +14,6 @@ class Equipment extends Model
     protected $appends = ['links'];
     protected $perPage = 10;
 
-    public static function saveComponent(int $equipment_id, int $component_id)
-    {
-        return DB::table('component_equipment')->insert([
-            'equipment_id' => $equipment_id,
-            'component_id' => $component_id
-        ]);
-    }
-
     public static function actives()
     {
         return self::where('status', true)
@@ -57,5 +49,23 @@ class Equipment extends Model
     {
         $date = new DateTime($date);
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public static function saveComponent(int $equipment_id, int $component_id)
+    {
+        return DB::table('component_equipment')->insert([
+            'equipment_id' => $equipment_id,
+            'component_id' => $component_id
+        ]);
+    }
+
+    public static function removeComponent(int $equipment_id, int $component_id)
+    {
+        DB::table('component_equipment')
+            ->where([
+                'equipment_id' => $equipment_id,
+                'component_id' => $component_id
+            ])
+            ->delete();
     }
 }

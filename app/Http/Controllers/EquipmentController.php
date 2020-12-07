@@ -123,4 +123,16 @@ class EquipmentController extends BaseController
             ], 500);
         }
     }
+
+    public function destroyEquipmentComponent(int $equipment_id, int $component_id)
+    {
+        try {
+            Equipment::removeComponent($equipment_id, $component_id);
+            return response()->json([], 204);
+        } catch (Throwable $t) {
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
+        }
+    }
 }
