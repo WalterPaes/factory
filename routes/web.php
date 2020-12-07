@@ -39,6 +39,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
 
         $router->get('{id}/components', 'EquipmentController@components');
         $router->post('{id}/components', 'EquipmentController@storeEquipmentComponent');
+        $router->post('{equipment_id}/components/{component_id}', 'EquipmentController@destroyEquipmentComponent');
         $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
     });
 
