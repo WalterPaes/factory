@@ -38,6 +38,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
         $router->delete('{id}', 'EquipmentController@destroy');
 
         $router->get('{id}/components', 'EquipmentController@components');
+        $router->post('{id}/components', 'EquipmentController@storeEquipmentComponent');
         $router->get('{id}/maintenances', 'MaintenanceController@searchByEquipment');
     });
 

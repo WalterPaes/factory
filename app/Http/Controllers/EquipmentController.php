@@ -70,10 +70,13 @@ class EquipmentController extends BaseController
         ]);
 
         try {
-            $resource = $this->model::edit($id, $request->all());
+            $resource = $this->model::find($id);
             if (is_null($resource)) {
                 return response()->json('Resource not found', 404);
             }
+
+            $resource->fill($request->all());
+            $resource->save();
 
             return response()->json([], 200);
         } catch (Throwable $t) {
@@ -89,6 +92,26 @@ class EquipmentController extends BaseController
             $data = Equipment::where('id', $id)
                 ->with('components')
                 ->get();
+            if (is_null($data)) {
+                return response()
+                    ->json([], 404);
+            }
+            return $data;
+        } catch (Throwable $t) {
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
+        }
+    }
+
+    public function storeEquipmentComponent(int $id, Request $request)
+    {
+        $this->validate($request, [
+            'component_id' => 'required',
+        ]);
+
+        try {
+            $data = Equipment::saveComponent($id, $request->component_id);
             if (is_null($data)) {
                 return response()
                     ->json([], 404);

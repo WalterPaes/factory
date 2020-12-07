@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Equipment extends Model
 {
@@ -13,27 +14,12 @@ class Equipment extends Model
     protected $appends = ['links'];
     protected $perPage = 10;
 
-    public static function create(array $data)
+    public static function saveComponent(int $equipment_id, int $component_id)
     {
-        $equipment = new Equipment;
-        $equipment->name = $data['name'];
-        $equipment->description = $data['description'];
-        $equipment->localization = $data['localization'];
-        $equipment->save();
-
-        $equipment->components()->attach($data['components']);
-        return $equipment->save();
-    }
-
-    public static function edit(int $id, array $data)
-    {
-        $equipment = self::find($id);
-        $equipment->name = $data['name'];
-        $equipment->description = $data['description'];
-        $equipment->status = $data['status'];
-        $equipment->localization = $data['localization'];
-        $equipment->components()->sync($data['components']);
-        return $equipment->save();
+        return DB::table('component_equipment')->insert([
+            'equipment_id' => $equipment_id,
+            'component_id' => $component_id
+        ]);
     }
 
     public static function actives()
