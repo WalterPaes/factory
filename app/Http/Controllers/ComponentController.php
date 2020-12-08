@@ -2,24 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Component;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Throwable;
 
-class UserController extends BaseController
+class ComponentController extends BaseController
 {
     public function __construct()
     {
-        $this->model = User::class;
+        $this->model = Component::class;
+    }
+
+    public function index(Request $request)
+    {
+        try {
+            if ($request->input('actives')) {
+                return Component::all();
+            }
+            return Component::with('equipments')
+                ->paginate($request->per_page);
+        } catch (Throwable $t) {
+            return response()->json([
+                "message" => $t->getMessage()
+            ], 500);
+        }
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => ['required', 'unique:users,username'],
-            'password' => ['required', 'min:6']
+            'serial_number' => 'required',
+            'model' => 'required',
+            'manufacturer' => 'required',
         ]);
 
         try {
@@ -38,8 +53,9 @@ class UserController extends BaseController
     {
         $this->validate($request, [
             'name' => 'required',
-            'username' => ['required', Rule::unique('users')->ignore($id)],
-            'password' => ['required', 'min:6']
+            'serial_number' => 'required',
+            'model' => 'required',
+            'manufacturer' => 'required'
         ]);
 
         try {
@@ -47,8 +63,10 @@ class UserController extends BaseController
             if (is_null($resource)) {
                 return response()->json('Resource not found', 404);
             }
+
             $resource->fill($request->all());
             $resource->save();
+
             return response()->json([], 200);
         } catch (Throwable $t) {
             return response()->json([], 500);

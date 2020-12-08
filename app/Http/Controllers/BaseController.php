@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Throwable;
 
 abstract class BaseController extends Controller
 {
@@ -11,26 +12,38 @@ abstract class BaseController extends Controller
 
     public function index(Request $request)
     {
-        return $this->model::paginate($request->per_page);
+        try {
+            return $this->model::paginate($request->per_page);
+        } catch (Throwable $t) {
+            return response()->json([], 500);
+        }
     }
 
     public function show(int $id)
     {
-        $data = $this->model::find($id);
-        if (is_null($data)) {
-            return response()
-                ->json([], 404);
+        try {
+            $data = $this->model::find($id);
+            if (is_null($data)) {
+                return response()
+                    ->json([], 404);
+            }
+            return $data;
+        } catch (Throwable $t) {
+            return response()->json([], 500);
         }
-        return $data;
     }
 
     public function destroy(int $id)
     {
-        $total = $this->model::destroy($id);
-        if ($total < 1) {
-            return response()->json('Resource not found', 404);
+        try {
+            $total = $this->model::destroy($id);
+            if ($total < 1) {
+                return response()->json('Resource not found', 404);
+            }
+            return response()->json([], 204);
+        } catch (Throwable $t) {
+            return response()->json([], 500);
         }
-        return response()->json([], 204);
     }
 
     abstract function store(Request $request);
