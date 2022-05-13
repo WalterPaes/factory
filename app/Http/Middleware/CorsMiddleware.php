@@ -6,11 +6,11 @@ use Closure;
 class CorsMiddleware
 {
     /**
-     * Handle an incoming request.
+     * Undocumented function
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param [type] $request
+     * @param Closure $next
+     * @return void
      */
     public function handle($request, Closure $next)
     {
