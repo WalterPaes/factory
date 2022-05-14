@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         try {
             $user = User::where('username', $request->username)->first();
-
+            
             if (is_null($user) || !Hash::check($request->password, $user->password)) {
                 return response()->json(['message' => 'Username or Password is invalid'], 401);
             }
